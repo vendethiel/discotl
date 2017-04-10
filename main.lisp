@@ -37,8 +37,8 @@
        (stream-name (a)
          (format nil "http://teamliquid.net~a" (attr-first a "href")))
        (stream-lang (imgs)
-         (if (plusp (length imgs)) ; 0 or 1
-             ;; extract flag
+         (if (has-elements imgs) ; 0 or 1
+             ;; extract flag (filename)
              (pathname-name (pathname (attr-first imgs "src")))
              +default-lang+))
        (get-streams (name stream-spans)
@@ -57,8 +57,6 @@
 
       for is-live = (search "ev-live" classes)
       for stream-spans = (clss:select ".ev-stream > div > span:first-child" event)
-      ;for stream-spans = (map 'list (lambda (div) (aref (clss:select "span" div) 0))
-      ;                        (clss:select ".ev-stream" event))
       for result = (list name
                          (unless is-live timer)
                          (if is-live (get-streams name stream-spans)))
@@ -75,9 +73,7 @@
      (lambda (event)
        (destructuring-bind (name timer stream) event
          (unless (search "days" timer) ; remove event in the "far" future (2d+)
-           (format t "~a~@[ - ~a~]~%~:{       :flag_~a: <~a>~%~}" name timer stream)
-
-           )))
+           (format t "~a~@[ - ~a~]~%~:{       :flag_~a: <~a>~%~}" name timer stream))))
      events)
     (write-char #\Newline)))
 
