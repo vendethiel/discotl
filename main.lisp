@@ -75,7 +75,7 @@
      (lambda (event)
        (destructuring-bind (name timer stream) event
          (unless (search "days" timer) ; remove event in the "far" future (2d+)
-           (format t "~a~@[ - ~a~]~%~:{       :flag_~a: ~a~%~}" name timer stream)
+           (format t "~a~@[ - ~a~]~%~:{       :flag_~a: <~a>~%~}" name timer stream)
 
            )))
      events)
