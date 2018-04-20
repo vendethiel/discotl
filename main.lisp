@@ -21,7 +21,7 @@
           for key = (read-line stream nil)
           for value = (read-line stream nil)
           until (or (null key) (null value))
-          do (setf (gethash key *sc2-streams*) value))))))
+          do (setf (gethash key table) value))))))
 
 (defun load-sc2-ignores ()
   (with-open-file (stream "ignore")
